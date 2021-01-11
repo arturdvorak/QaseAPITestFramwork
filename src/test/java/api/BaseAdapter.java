@@ -1,7 +1,6 @@
 package api;
 
 import com.google.gson.Gson;
-import models.Project;
 import utils.PropertyReader;
 import com.google.gson.GsonBuilder;
 import io.restassured.response.Response;
@@ -15,16 +14,16 @@ public class BaseAdapter {
                 .excludeFieldsWithoutExposeAnnotation()
                 .create();
 
-    public Response post(String uri, Project project) {
+    public Response post(String uri, String body) {
         return
                 given()
                         .header("Token", System.getenv().getOrDefault("token", PropertyReader.getProperty("token")))
                         .header("Content-Type", "application/json")
-                        .body(gson.toJson(project))
+                        .body(body)
                         .when()
                         .post(urlAPI + uri)
                         .then()
-                        .log().all()
+                        .log().ifError()
                         .statusCode(200)
                         .extract().response();
     }
