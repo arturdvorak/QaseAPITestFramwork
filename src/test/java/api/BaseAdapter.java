@@ -6,7 +6,7 @@ import com.google.gson.GsonBuilder;
 import io.restassured.response.Response;
 import javax.ws.rs.core.MediaType;
 
-import static io.restassured.RestAssured.given;;
+import static io.restassured.RestAssured.given;
 
 public class BaseAdapter {
     String urlAPI = System.getenv().getOrDefault("url", PropertyReader.getProperty("url"));
@@ -16,7 +16,7 @@ public class BaseAdapter {
                 .excludeFieldsWithoutExposeAnnotation()
                 .create();
 
-    public Response post(String uri, String body) {
+    public Response post(String uri, String body, int expectedStatusCode) {
         return
                 given()
                         .header("Token", System.getenv().getOrDefault("token", PropertyReader.getProperty("token")))
@@ -26,7 +26,7 @@ public class BaseAdapter {
                         .post(urlAPI + uri)
                         .then()
                         .log().ifError()
-                        .statusCode(200)
+                        .statusCode(expectedStatusCode)
                         .extract().response();
     }
 }

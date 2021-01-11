@@ -7,7 +7,7 @@ public class ProjectAdapter extends BaseAdapter {
 
     public String addProject(Project project) {
         return
-                post(uriAdd, gson.toJson(project))
+                post(uriAdd, gson.toJson(project), 200)
                         .body().path("code");
     }
 }
