@@ -10,6 +10,7 @@ import static io.restassured.RestAssured.given;
 
 public class BaseAdapter {
     String urlAPI = System.getenv().getOrDefault("url", PropertyReader.getProperty("url"));
+    String newProjectCode;
 
     Gson gson = new GsonBuilder()
                 .setPrettyPrinting()
