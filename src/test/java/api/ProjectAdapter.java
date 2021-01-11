@@ -8,7 +8,7 @@ public class ProjectAdapter extends BaseAdapter {
     public String addProject(Project project) {
         newProjectCode = post(uriAdd, gson.toJson(project), 200)
                 .body().path("result.code");
-        //System.out.println(newProjectCode);
+        System.out.println(newProjectCode);
         return newProjectCode;
     }
 }

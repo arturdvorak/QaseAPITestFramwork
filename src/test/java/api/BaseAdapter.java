@@ -5,7 +5,6 @@ import utils.PropertyReader;
 import com.google.gson.GsonBuilder;
 import io.restassured.response.Response;
 import javax.ws.rs.core.MediaType;
-
 import static io.restassured.RestAssured.given;
 
 public class BaseAdapter {

@@ -9,8 +9,7 @@ public class SuiteTest extends BaseTest {
     SuiteFactory suiteFactory = new SuiteFactory();
 
     @Test(description = "Create, update and remove test suite")
-    public void createNewTestSuite() {
-        projectAdapter.addProject(projectFactory.getProject());
-        suiteAdapter.addSuite(suiteFactory.getSuite());
+    public void createNewSuite() {
+        suiteAdapter.addSuite(suiteFactory.getSuite(), projectAdapter.addProject(projectFactory.getProject()));
     }
 }
