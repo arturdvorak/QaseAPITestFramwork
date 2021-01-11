@@ -5,10 +5,12 @@ import utils.PropertyReader;
 import com.google.gson.GsonBuilder;
 import io.restassured.response.Response;
 import javax.ws.rs.core.MediaType;
+
+import static io.restassured.RestAssured.baseURI;
 import static io.restassured.RestAssured.given;
 
 public class BaseAdapter {
-    String urlAPI = System.getenv().getOrDefault("url", PropertyReader.getProperty("url"));
+    //String urlAPI = System.getenv().getOrDefault("url", PropertyReader.getProperty("url"));
     String newProjectCode;
 
     Gson gson = new GsonBuilder()
@@ -23,7 +25,7 @@ public class BaseAdapter {
                         .header("Content-Type", MediaType.APPLICATION_JSON)
                         .body(body)
                         .when()
-                        .post(urlAPI + uri)
+                        .post(baseURI + uri)
                         .then()
                         .log().ifError()
                         .statusCode(expectedStatusCode)
