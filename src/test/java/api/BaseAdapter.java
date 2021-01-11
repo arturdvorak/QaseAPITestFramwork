@@ -4,7 +4,9 @@ import com.google.gson.Gson;
 import utils.PropertyReader;
 import com.google.gson.GsonBuilder;
 import io.restassured.response.Response;
-import static io.restassured.RestAssured.given;
+import javax.ws.rs.core.MediaType;
+
+import static io.restassured.RestAssured.given;;
 
 public class BaseAdapter {
     String urlAPI = System.getenv().getOrDefault("url", PropertyReader.getProperty("url"));
@@ -18,7 +20,7 @@ public class BaseAdapter {
         return
                 given()
                         .header("Token", System.getenv().getOrDefault("token", PropertyReader.getProperty("token")))
-                        .header("Content-Type", "application/json")
+                        .header("Content-Type", MediaType.APPLICATION_JSON)
                         .body(body)
                         .when()
                         .post(urlAPI + uri)
