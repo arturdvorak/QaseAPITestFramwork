@@ -10,9 +10,6 @@ import static io.restassured.RestAssured.baseURI;
 import static io.restassured.RestAssured.given;
 
 public class BaseAdapter {
-    //String urlAPI = System.getenv().getOrDefault("url", PropertyReader.getProperty("url"));
-    String newProjectCode;
-
     Gson gson = new GsonBuilder()
                 .setPrettyPrinting()
                 .excludeFieldsWithoutExposeAnnotation()
@@ -28,6 +25,19 @@ public class BaseAdapter {
                         .post(baseURI + uri)
                         .then()
                         .log().ifError()
+                        .statusCode(expectedStatusCode)
+                        .extract().response();
+    }
+
+    public Response get(String uri, int expectedStatusCode) {
+        return
+                given()
+                        .header("Token", System.getenv().getOrDefault("token", PropertyReader.getProperty("token")))
+                        .header("Content-Type", MediaType.APPLICATION_JSON)
+                        .get(baseURI + uri)
+                        .then()
+                        .log().ifError()
+                        .assertThat()
                         .statusCode(expectedStatusCode)
                         .extract().response();
     }

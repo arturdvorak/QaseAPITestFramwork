@@ -10,7 +10,7 @@ import utils.PropertyReader;
 public class BaseTest {
     protected ProjectAdapter projectAdapter;
     protected SuiteAdapter suiteAdapter;
-    protected String newProjectCode;
+    protected String projectCode;
     protected ProjectFactory projectFactory;
 
     @BeforeClass(description = "TBD")
@@ -19,6 +19,6 @@ public class BaseTest {
         projectAdapter = new ProjectAdapter();
         suiteAdapter = new SuiteAdapter();
         projectFactory = new ProjectFactory();
-        newProjectCode = projectAdapter.addProject(projectFactory.getProject());
+        projectCode = projectAdapter.addProject(projectFactory.getProject());
     }
 }
