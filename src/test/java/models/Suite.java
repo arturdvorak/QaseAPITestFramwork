@@ -13,7 +13,7 @@ public class Suite {
     private String title;
     @Expose
     @SerializedName("parent_id")
-    private String parentId;
+    private int parentId;
     @Expose
     @SerializedName("description")
     private String description;

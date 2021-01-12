@@ -9,6 +9,7 @@ import javax.ws.rs.core.MediaType;
 import static io.restassured.RestAssured.baseURI;
 import static io.restassured.RestAssured.given;
 
+//return response in general
 public class BaseAdapter {
     Gson gson = new GsonBuilder()
                 .setPrettyPrinting()
@@ -24,7 +25,7 @@ public class BaseAdapter {
                         .when()
                         .post(baseURI + uri)
                         .then()
-                        .log().ifError()
+                        .log().body()
                         .statusCode(expectedStatusCode)
                         .extract().response();
     }
@@ -36,7 +37,7 @@ public class BaseAdapter {
                         .header("Content-Type", MediaType.APPLICATION_JSON)
                         .get(baseURI + uri)
                         .then()
-                        .log().ifError()
+                        .log().body()
                         .assertThat()
                         .statusCode(expectedStatusCode)
                         .extract().response();

@@ -13,7 +13,7 @@ public class ProjectFactory {
     public Project getProject() {
         return Project.builder().title(usFaker.company().name())
                 .description(usFaker.company().name())
-                .code(usFaker.lorem().word())
+                .code(usFaker.lorem().word() + "A")
                 .access("all")
                 .group("Test123")
                 .build();

@@ -10,7 +10,6 @@ public class SuiteFactory {
     public Suite getSuite() {
         return Suite.builder()
                 .title(usFaker.company().name())
-                .parentId(null)
                 .description(usFaker.company().catchPhrase())
                 .preconditions(usFaker.lorem().word())
                 .build();

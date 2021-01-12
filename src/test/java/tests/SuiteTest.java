@@ -2,6 +2,7 @@ package tests;
 
 import models.Suite;
 import models.SuiteFactory;
+import org.testng.Assert;
 import org.testng.annotations.Test;
 
 public class SuiteTest extends BaseTest {
@@ -12,6 +13,7 @@ public class SuiteTest extends BaseTest {
     public void createNewSuite() {
         Suite suite = suiteFactory.getSuite();
         suiteId = suiteAdapter.addSuite(suite, projectCode);
-        suiteAdapter.getSuiteByIdAndVerify(projectCode, suiteId, suite);
+        Suite actualSuite = suiteAdapter.getSuite(projectCode, suiteId, suite);
+        Assert.assertEquals(actualSuite, suite);
     }
 }
