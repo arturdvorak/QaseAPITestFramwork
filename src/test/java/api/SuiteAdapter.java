@@ -1,27 +1,38 @@
 package api;
 
 import io.restassured.response.Response;
+import com.google.gson.reflect.TypeToken;
+import models.ErrorFields;
+import models.ErrorResult;
+import models.Result;
 import models.Suite;
+import org.testng.Assert;
 
-import static org.hamcrest.CoreMatchers.equalTo;
+import java.util.ArrayList;
 
 public class SuiteAdapter extends BaseAdapter {
     String uriAdd = "suite/";
 
-    public int addSuite(Suite suite, String projectCode) {
+    public Suite addSuite(Suite suite, String projectCode) {
         Response response = post(uriAdd + projectCode, gson.toJson(suite), 200);
-        response.body().path("status", String.valueOf(equalTo("true"))); //check if it works
-        return response.body().path("result.id");
+        Result<Suite> result = gson.fromJson(response.asString(),
+                new TypeToken<Result<Suite>>(){}.getType());
+        Assert.assertTrue(result.isStatus());
+        return result.getResult();
     }
 
-    public Suite getSuite(String projectCode, int suiteId, Suite suite) { //get and return serialized Suite
+    public ArrayList<ErrorFields> addSuite(Suite suite, String projectCode, int expectedStatusCode) {
+        Response response = post(uriAdd + projectCode, gson.toJson(suite), expectedStatusCode);
+        ErrorResult result = gson.fromJson(response.asString(), ErrorResult.class);
+        Assert.assertFalse(result.isStatus());
+        System.out.println(result);
+        return result.getErrorFields();
+    }
+
+    public Suite getSuite(String projectCode, int suiteId) {
         Response response = get(uriAdd + projectCode + "/" + suiteId,200);
-        return gson.fromJson(response.body().jsonPath().getJsonObject("result").toString(), Suite.class);
-        //response.body().path("result").toString()
-/*        response.body().path("id.title", String.valueOf(equalTo(suite.getTitle())));
-        response.body().path("id.parent_id", String.valueOf(equalTo(null)));
-        response.body().path("id.description", String.valueOf(equalTo(suite.getDescription())));
-        response.body().path("id.preconditions", String.valueOf(equalTo(suite.getPreconditions())));*/
-        //should we check other fields?
+        Result<Suite> result = gson.fromJson(response.asString(),
+                new TypeToken<Result<Suite>>(){}.getType());
+        return result.getResult();
     }
 }
