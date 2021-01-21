@@ -21,11 +21,11 @@ public class SuiteAdapter extends BaseAdapter {
         return result.getResult();
     }
 
-    public ArrayList<ErrorFields> addSuite(Suite suite, String projectCode, int expectedStatusCode) {
+    public ArrayList<ErrorFields> addSuite(Suite suite, String projectCode, boolean status, int expectedStatusCode) {
         Response response = post(uriAdd + projectCode, gson.toJson(suite), expectedStatusCode);
         ErrorResult result = gson.fromJson(response.asString(), ErrorResult.class);
-        Assert.assertFalse(result.isStatus());
-        System.out.println(result);
+        Assert.assertEquals(result.isStatus(), status);
+        //System.out.println(result);
         return result.getErrorFields();
     }
 
