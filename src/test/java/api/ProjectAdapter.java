@@ -11,7 +11,6 @@ public class ProjectAdapter extends BaseAdapter {
     public String addProject(Project project) {
         Response response =  post(uriAdd, gson.toJson(project), 200);
         response.body().path("status", String.valueOf(equalTo("true")));
-        //System.out.println(response.body().path("result.code").toString());
         return response.body().path("result.code");
     }
 }

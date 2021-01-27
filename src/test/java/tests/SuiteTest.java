@@ -4,14 +4,20 @@ import models.ErrorFields;
 import models.Suite;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.testng.Assert;
+import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
-
 import java.util.ArrayList;
 
 public class SuiteTest extends BaseTest {
-    protected int suiteId;
+    private int suiteId;
+    private String projectCode;
 
-    @Test(description = "Create new suite: title critical path", enabled = false)
+    @BeforeTest(description = "Create new project")
+    public void createNewProject() {
+        projectCode = projectAdapter.addProject(projectFactory.getProject());
+    }
+
+    @Test(description = "Create new suite: title critical path", enabled = true)
     public void createNewSuite() {
         Suite suite = Suite.builder()
                 .title(RandomStringUtils.randomAlphabetic(10))
@@ -25,7 +31,7 @@ public class SuiteTest extends BaseTest {
         Assert.assertEquals(actualSuite, suite);
     }
 
-    @Test(description = "Create new suite: empty description" , enabled = false)
+    @Test(description = "Create new suite: empty description" , enabled = true)
     public void createNewSuiteWithEmptyDescription() {
         Suite suite = Suite.builder()
                 .title(RandomStringUtils.randomAlphabetic(10))
@@ -39,7 +45,7 @@ public class SuiteTest extends BaseTest {
         Assert.assertEquals(actualSuite, suite);
     }
 
-    @Test(description = "Create new suite: empty title" , enabled = false)
+    @Test(description = "Create new suite: empty title" , enabled = true)
     public void createNewSuiteWithEmptyTitle() {
         Suite suite = Suite.builder()
                 .description(usFaker.company().catchPhrase())
@@ -55,7 +61,7 @@ public class SuiteTest extends BaseTest {
         Assert.assertEquals(actualError, error);
     }
 
-    @Test(description = "Create new suite: more than max length title", enabled = false)
+    @Test(description = "Create new suite: more than max length title", enabled = true)
     public void createNewSuiteWithMoreThanMaxLengthTitle() {
         Suite suite = Suite.builder()
                 .title(RandomStringUtils.randomAlphabetic(256))
@@ -72,7 +78,7 @@ public class SuiteTest extends BaseTest {
         Assert.assertEquals(actualError, error);
     }
 
-    @Test(description = "Create new suite: invalid parent_id", enabled = false)
+    @Test(description = "Create new suite: invalid parent_id", enabled = true)
     public void createNewSuiteWithInvalidParentId() {
         Suite suite = Suite.builder()
                 .title(RandomStringUtils.randomAlphabetic(10))

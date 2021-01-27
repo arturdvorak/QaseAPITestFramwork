@@ -8,8 +8,8 @@ import lombok.EqualsAndHashCode;
 
 @Data
 @Builder
-@EqualsAndHashCode(exclude = {"id", "position", "created", "updated"})
-public class Suite {
+@EqualsAndHashCode(exclude = {"created", "updated"})
+public class Case {
     @Expose
     @SerializedName("id")
     private int id;
@@ -17,8 +17,11 @@ public class Suite {
     @SerializedName("title")
     private String title;
     @Expose
-    @SerializedName("parent_id")
-    private int parentId;
+    @SerializedName("position")
+    private int position;
+    @Expose
+    @SerializedName("suite_id")
+    private int suite_id;
     @Expose
     @SerializedName("description")
     private String description;
@@ -26,8 +29,8 @@ public class Suite {
     @SerializedName("preconditions")
     private String preconditions;
     @Expose
-    @SerializedName("position")
-    private int position;
+    @SerializedName("postconditions")
+    private String postconditions;
     @Expose
     @SerializedName("created")
     private String created;
