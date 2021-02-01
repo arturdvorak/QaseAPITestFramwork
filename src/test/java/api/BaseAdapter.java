@@ -1,6 +1,7 @@
 package api;
 
 import com.google.gson.Gson;
+import io.restassured.specification.RequestSpecification;
 import utils.PropertyReader;
 import com.google.gson.GsonBuilder;
 import io.restassured.response.Response;
@@ -14,11 +15,14 @@ public class BaseAdapter {
                 .excludeFieldsWithoutExposeAnnotation()
                 .create();
 
+    RequestSpecification headerRequest = given()
+                .header("Token", System.getenv().getOrDefault("token", PropertyReader.getProperty("token")))
+                .header("Content-Type", MediaType.APPLICATION_JSON);
+
     public Response post(String uri, String body, int expectedStatusCode) {
         return
                 given()
-                        .header("Token", System.getenv().getOrDefault("token", PropertyReader.getProperty("token")))
-                        .header("Content-Type", MediaType.APPLICATION_JSON)
+                        .spec(headerRequest)
                         .body(body)
                         .when()
                         .post(baseURI + uri)
@@ -31,8 +35,7 @@ public class BaseAdapter {
     public Response get(String uri, int expectedStatusCode) {
         return
                 given()
-                        .header("Token", System.getenv().getOrDefault("token", PropertyReader.getProperty("token")))
-                        .header("Content-Type", MediaType.APPLICATION_JSON)
+                        .spec(headerRequest)
                         .get(baseURI + uri)
                         .then()
                         .log().body()
@@ -44,8 +47,7 @@ public class BaseAdapter {
     public Response patch(String uri, String body, int expectedStatusCode) {
         return
                 given()
-                        .header("Token", System.getenv().getOrDefault("token", PropertyReader.getProperty("token")))
-                        .header("Content-Type", MediaType.APPLICATION_JSON)
+                        .spec(headerRequest)
                         .body(body)
                         .when()
                         .patch(baseURI + uri)
@@ -58,8 +60,7 @@ public class BaseAdapter {
     public Response delete(String uri, int expectedStatusCode) {
         return
                 given()
-                        .header("Token", System.getenv().getOrDefault("token", PropertyReader.getProperty("token")))
-                        .header("Content-Type", MediaType.APPLICATION_JSON)
+                        .spec(headerRequest)
                         .when()
                         .delete(baseURI + uri)
                         .then()
